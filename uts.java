@@ -1,7 +1,7 @@
 package bgt;
 
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
+import javax.swing.*;
 import javax.swing.JOptionPane;
 /**
  *
@@ -16,32 +16,47 @@ public class baguke extends javax.swing.JFrame {
      
     public baguke(){
         initComponents();
-        
-       
     }
     
-    public static int getRandomElement(int[] arr){
-        return arr[ThreadLocalRandom.current().nextInt(arr.length)];
+    public String getComputerChoice() {
+        String[] choices = {"Gunting", "Batu", "Kertas"};
+        Random random = new Random();
+        return choices[random.nextInt(choices.length)];
     }
-
-    //Example Usage:
     
-    
-    
-    public void lawan(){
-        int[] nums = {1, 2, 3};
-        int randNum = getRandomElement(nums);
-        tf_tes.setText(String.valueOf(randNum));
-        
-        
-        if(gunting.isSelected()){
-            if(randNum==1){
-               JOptionPane.showMessageDialog(null, "anda menang", "permisi kak....", JOptionPane.INFORMATION_MESSAGE); 
-            }
-            
-        }else if(batu.isSelected()){
-            JOptionPane.showMessageDialog(null, "anda menang", "permisi kak....", JOptionPane.INFORMATION_MESSAGE);
-        }else if(kertas.isSelected()){
-            JOptionPane.showMessageDialog(null, "anda menang", "permisi kak....", JOptionPane.INFORMATION_MESSAGE);
+    public String determineResult(String playerChoice, String computerChoice) {
+        if (playerChoice.equals(computerChoice)) {
+            return "Seri! Anda dan komputer sama-sama memilih " + playerChoice;
+        } else if (
+            (playerChoice.equals("Gunting") && computerChoice.equals("Kertas")) ||
+            (playerChoice.equals("Batu") && computerChoice.equals("Gunting")) ||
+            (playerChoice.equals("Kertas") && computerChoice.equals("Batu"))
+        ) {
+            return "Anda menang! Komputer memilih " + computerChoice;
+        } else {
+            return "Anda kalah! Komputer memilih " + computerChoice;
         }
     }
+
+
+
+private void guntingActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        String playerChoice = "Gunting";
+        String computerChoice = getComputerChoice();
+        String result = determineResult(playerChoice, computerChoice);
+        JOptionPane.showMessageDialog(null, result); 
+    }                                       
+
+    private void batuActionPerformed(java.awt.event.ActionEvent evt) {                                     
+        String playerChoice = "Batu";
+        String computerChoice = getComputerChoice();
+        String result = determineResult(playerChoice, computerChoice);
+        JOptionPane.showMessageDialog(null, result); 
+    }                                    
+
+    private void kertasActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        String playerChoice = "Kertas";
+        String computerChoice = getComputerChoice();
+        String result = determineResult(playerChoice, computerChoice);
+        JOptionPane.showMessageDialog(null, result);
+    } 
